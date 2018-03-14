@@ -1,4 +1,5 @@
 package pl.codespring.jtask.Task;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -6,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import javax.persistence.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -22,9 +24,12 @@ class ParseDeserializer extends StdDeserializer<LocalDateTime> {
         return LocalDateTime.parse(p.getValueAsString()); // or overloaded with an appropriate format
     }
 }
+
 @Entity
 public class Task {
 
+    @Column(name = "status")
+    boolean status = false;
     @Id
     @GeneratedValue
     private int id;
@@ -39,18 +44,28 @@ public class Task {
     @Column(name = "taskPriority")
     @Enumerated(EnumType.STRING)
     private TaskPriority priority;
-    @Column(name = "status")
-    boolean status=false;
-
 
     {
         this.toDoDate = LocalDateTime.now();
-        this.status=false;
+        this.status = false;
+        this.priority = TaskPriority.MEDIUM;
+        this.status = true;
+
     }
 
     public Task() {
 
     }
+
+    public Task(boolean status, String name, String description, LocalDateTime toDoDate, TaskPriority priority) {
+        this.status = status;
+        this.name = name;
+        this.description = description;
+        this.toDoDate = toDoDate;
+        this.priority = priority;
+    }
+
+
 
     public boolean isStatus() {
         return status;
@@ -66,13 +81,6 @@ public class Task {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Task(String name, String description, LocalDateTime toDoDate, TaskPriority priority) {
-        this.name = name;
-        this.description = description;
-        this.toDoDate = toDoDate;
-        this.priority = priority;
     }
 
     public LocalDateTime getToDoDate() {
