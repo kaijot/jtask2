@@ -63,22 +63,22 @@
                 <a href="mailto:jarek.kistowski@gmail.com">jarek.kistowski@gmail.com</a>
             </div>
 
-        <div>
-            <table class="taskTable" th:each="task: ${tasks}">
-            <thead>
-                <tr>
-                <th th:text="${task.id}"></th>
-                <th th:text="${task.name}"></th>
-                    <th th:text="${task.priority}"></th>
-                </tr></thead>
-                <tbody>
-                <tr>
-                    <td colspan="3" th:text="${task.description}"></td></tr>
-                <tr><td colspan="3" th:text="${task.toDoDate}"></td></tr>
-                </tbody>
+            <div>
+                <table class="taskTable" th:each="task: ${tasks}">
+                    <thead>
+                    <tr>
+                        <th th:text="${task.id}"></th>
+                        <th th:text="${task.name}"></th>
+                        <th th:text="${task.priority}"></th>
+                    </tr></thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="3" th:text="${task.description}"></td></tr>
+                    <tr><td colspan="3" th:text="${task.toDoDate}"></td></tr>
+                    </tbody>
 
-            </table>
-        </div>
+                </table>
+            </div>
         </div>
     </section>
 
@@ -86,15 +86,16 @@
 
 
         <div>
-            <table class="taskTable">
-                <thead>
-                <tr><th><input type="text" th:field="*{textField}" th:value="${taskName}"}/></th></tr>
-                </thead>
-                <tbody>
-                <tr><td><input type="text" th:field="*{textField}" th:value="${taskDescription}"</td></tr>
-                <tr><td><input </td></tr>
-                </tbody>
-            </table>
+            <form  th:action="@{taskForm}" th:object="${task}" method="post">
+                <table class="taskTable">
+                    <thead>
+                    <tr><th><input  th:field="*{name}"/></th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td><input  th:field="*{description}"/></td></tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
         <div>
             <table class="taskTable" th:each="task: ${tasks}">
